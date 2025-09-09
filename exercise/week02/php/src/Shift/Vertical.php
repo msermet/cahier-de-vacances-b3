@@ -13,7 +13,7 @@ class Vertical
     public static function whichFloor(string $signalStream): int
     {
 
-        $val = [];
+        $valeurFinale = [];
         if (str_contains($signalStream,'🧝')) {
             // remplace l'emoji par un caractère vide
             $signalStream=str_replace('🧝','',$signalStream);
