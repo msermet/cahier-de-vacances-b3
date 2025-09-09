@@ -4,28 +4,26 @@ namespace Shift;
 
 class Vertical
 {
+    public static function valeurEtage (int $chiffre1, int $chiffre2, string $sensParenthese, string $signalStream) {
+        for ($indice = 0; $indice < strlen($signalStream); $indice++) {
+            $valeurFinale[] = [$signalStream[$indice], ($signalStream[$indice] === $sensParenthese) ? $chiffre1 : $chiffre2];
+        }
+        return $valeurFinale;
+    }
     public static function whichFloor(string $signalStream): int
     {
+
         $val = [];
-
-        for ($i = 0; $i < strlen($signalStream); $i++) {
-            $c = $signalStream[$i];
-
-            if (strpos($signalStream, "🧝")) {
-                $j = ($c === ')') ? 3 : -2;
-                $val[] = [$c, $j];
-            } else if (strpos($signalStream, "🧝") === false) {
-                $val[] = [$c, ($c === '(') ? 1 : -1];
-            } else {
-                $val[] = [$c, ($c === '(') ? 42 : -2];
-            }
+        if (str_contains($signalStream,'🧝')) {
+            // remplace l'emoji par un caractère vide
+            $signalStream=str_replace('🧝','',$signalStream);
+            // parcourt le fichier et enregistre les valeurs des étages dans $val
+            $valeurFinale=self::valeurEtage(3,-2,')',$signalStream);
+        } else {
+            // si pas d'emoji, parcourt le fichier et enregistre les valeurs des étages dans $val
+            $valeurFinale=self::valeurEtage(1,-1,'(',$signalStream);
         }
-
-        $result = 0;
-        foreach ($val as $kp) {
-            $result += $kp[1];
-        }
-
-        return $result;
+        // retourne la somme des valeurs des étages mdr
+        return array_sum(array_column($valeurFinale, 1));
     }
 }
