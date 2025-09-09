@@ -4,6 +4,8 @@ namespace Shift;
 
 class Vertical
 {
+    const NEEDLE = '🧝';
+
     public static function valeurEtage (int $chiffre1, int $chiffre2, string $sensParenthese, string $signalStream) {
         for ($indice = 0; $indice < strlen($signalStream); $indice++) {
             $valeurFinale[] = [$signalStream[$indice], ($signalStream[$indice] === $sensParenthese) ? $chiffre1 : $chiffre2];
@@ -14,9 +16,9 @@ class Vertical
     {
 
         $valeurFinale = [];
-        if (str_contains($signalStream,'🧝')) {
+        if (str_contains($signalStream, '' . self::NEEDLE . '')) {
             // remplace l'emoji par un caractère vide
-            $signalStream=str_replace('🧝','',$signalStream);
+            $signalStream=str_replace(self::NEEDLE,'',$signalStream);
             // parcourt le fichier et enregistre les valeurs des étages dans $val
             $valeurFinale=self::valeurEtage(3,-2,')',$signalStream);
         } else {
